@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NSFW Mobile POV Story - Chapter 1</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.development.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.development.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.22.5/babel.min.js"></script>
+  <style>
+    .image-section {
+      width: 100%;
+      height: 200px;
+      object-fit: contain;
+      cursor: pointer;
+      background-color: #000;
+    }
+    .message-bubble {
+      max-width: 70%;
+      margin: 10px;
+      padding: 10px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .user-message {
+      background-color: #4f46e5;
+      color: white;
+      margin-left: auto;
+    }
+    .other-message {
+      background-color: #e5e7eb;
+      color: black;
+    }
+  </style>
+</head>
+<body class="bg-gray-900 text-white font-sans">
+  <div id="root"></div>
+  <script type="text/babel">
+    const { useState } = React;
+
+    const App = () => {
+      const [currentApp, setCurrentApp] = useState('home');
+      const [uploadedImage, setUploadedImage] = useState('https://via.placeholder.com/400x200?text=Anjali+Image');
+      const [messages, setMessages] = useState([]);
+      const [messageIndex, setMessageIndex] = useState(0);
+
+      const messageSequence = [
+        {
+          user: "Hey Mom, I’m heading home from college. You okay?",
+          reply: "Oh, Arjun, I’m fine! Just cleaning the house, so sweaty today. That nice boy, Jamal, stopped by to drop off your notes."
+        },
+        {
+          user: "What boy? I didn’t ask anyone to drop off notes.",
+          reply: "That tall African boy, Jamal. So polite! He helped me move some boxes. Such a strong young man!"
+        },
+        {
+          user: "You mean Jamal, my bully? Mom, he’s not nice. Be careful.",
+          reply: "Don’t be silly, beta. He was kind and said he’ll come by again. I need to freshen up now!"
+        },
+        {
+          user: "Why was he even in our house for so long?",
+          reply: "He just stayed for chai, Arjun. So charming, told me stories about college. You should be more like him!"
+        },
+        {
+          user: "Mom, your Snapchat post looked weird. What’s going on?",
+          reply: "Oh, it’s just for fun! Jamal showed me how to use it. Don’t worry so much, beta."
+        },
+        {
+          user: "I don’t like him coming over. Please tell him to stop.",
+          reply: "Arjun, stop being jealous. He’s your friend! He’s welcome here anytime."
+        }
+      ];
+
+      const snapchats = [
+        {
+          id: 1,
+          caption: "Feeling refreshed after a long day! 😊",
+          description: "A selfie of Anjali in a slightly low-cut green saree, sweat glistening on her fair skin, smiling softly. Her hair is tied loosely, and the kitchen is in the background. Jamal viewed it.",
+          views: 35,
+          likes: 15,
+          comments: ["Looking radiant, aunty! – JamalTheKing", "Wow, that saree is stunning! – CollegeMate", "Gorgeous as always! – PriyaLad"]
+        },
+        {
+          id: 2,
+          caption: "Clumsy me! 😅",
+          description: "A blurry shot of Anjali adjusting her saree near the mirror, showing a hint of cleavage. Her fair skin glows under the light, and she’s smiling shyly. Jamal sent a thumbs-up emoji.",
+          views: 25,
+          likes: 10,
+          comments: ["You’re killing it! – JamalTheKing", "So pretty! – SnapLover"]
+        },
+        {
+          id: 3,
+          caption: "Evening chai vibes! ☕",
+          description: "A photo of Anjali holding a cup of chai, her saree slightly slipped off her shoulder, revealing her collarbone. She’s laughing softly, and the living room is dimly lit. Jamal viewed it.",
+          views: 30,
+          likes: 12,
+          comments: ["Chai and charm, perfect combo! – JamalTheKing", "Love this vibe! – NightOwl"]
+        }
+      ];
+
+      const slutfans = [
+        {
+          id: 1,
+          content: "A photo of Anjali holding a glass of water, her red saree slipping slightly off her shoulder, with a coy smile. Caption: 'So hot today! Needed to cool down. 😊 #Newbie'",
+          comments: ["You’re gonna love this app! Can’t wait for more! – JamalTheKing", "Stunning, aunty! – FanBoyX"]
+        },
+        {
+          id: 2,
+          content: "A short clip of Anjali arranging flowers in a vase, her saree clinging to her curves as she bends slightly. Caption: 'Feeling so good today! 🌸 #HousewifeVibes'",
+          comments: ["Looking amazing! See you soon! – JamalTheKing", "Wow, you’re a natural! – SlutFan69"]
+        },
+        {
+          id: 3,
+          content: "A photo of Anjali sitting on the couch, fanning herself with her saree, revealing a bit of her midriff. Caption: 'This heat is too much! 😅 #SummerDays'",
+          comments: ["You’re turning up the heat! – JamalTheKing", "Gorgeous! – HotFan"]
+        }
+      ];
+
+      const handleImageUpload = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = (e) => setUploadedImage(e.target.result);
+          reader.readAsDataURL(file);
+        }
+      };
+
+      const sendMessage = (index) => {
+        const currentMessage = messageSequence[index];
+        setMessages([...messages, { id: messages.length + 1, sender: 'user', text: currentMessage.user }]);
+        setTimeout(() => {
+          setMessages((prev) => [
+            ...prev,
+            { id: prev.length + 1, sender: 'mother', text: currentMessage.reply }
+          ]);
+        }, 1000);
+        setMessageIndex(index + 1);
+      };
+
+      return (
+        <div className="min-h-screen flex flex-col">
+          <input
+            type="file"
+            accept="image/*"
+            id="image-upload"
+            className="hidden"
+            onChange={handleImageUpload}
+          />
+          <img
+            src={uploadedImage}
+            alt="Anjali"
+            className="image-section"
+            onClick={() => document.getElementById('image-upload').click()}
+          />
+          {currentApp === 'home' && (
+            <div className="flex flex-col items-center justify-center flex-grow p-4 space-y-4">
+              <h1 className="text-2xl font-bold">Chapter 1: The First Spark</h1>
+              <p className="text-center">
+                I’m Arjun, a beta, always overlooked, living in the shadow of stronger guys. My mom, Anjali—busty, beautiful, fair-skinned, and sweaty from her housewife chores—is the heart of our home. She’s perfect, traditional, always in her sarees, cooking and cleaning. But today, something feels off. Jamal, my Black African college bully, came by, and I can’t shake this uneasy feeling.
+              </p>
+              <p className="text-center">
+                He’s all charm with her, helping with boxes, sharing chai, and she’s smiling too much. Her Snapchat and Slutfans posts are different—bolder, almost flirty. Jamal’s presence lingers, his alpha energy creeping into our house. It’s just the start, but I feel her slipping, and I’m powerless, stuck as the weak son watching it unfold.
+              </p>
+              <button
+                className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full"
+                onClick={() => setCurrentApp('messenger')}
+              >
+                Messenger
+              </button>
+              <button
+                className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded w-full"
+                onClick={() => setCurrentApp('snapchat')}
+              >
+                Snapchat
+              </button>
+              <button
+                className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded w-full"
+                onClick={() => setCurrentApp('slutfans')}
+              >
+                Slutfans
+              </button>
+            </div>
+          )}
+          {currentApp === 'messenger' && (
+            <div className="flex flex-col flex-grow p-4">
+              <h2 className="text-xl font-bold mb-4">Messenger</h2>
+              <div className="flex-grow overflow-y-auto mb-4">
+                {messages.map((msg) => (
+                  <div
+                    key={msg.id}
+                    className={`message-bubble ${msg.sender === 'user' ? 'user-message' : 'other-message'}`}
+                  >
+                    {msg.text}
+                  </div>
+                ))}
+                {messageIndex < messageSequence.length && (
+                  <div
+                    className="message-bubble user-message"
+                    onClick={() => sendMessage(messageIndex)}
+                  >
+                    {messageSequence[messageIndex].user}
+                  </div>
+                )}
+              </div>
+              <button
+                className="bg-gray-600 hover:bg-gray-700 text-white py-2 px-4 rounded"
+                onClick={() => setCurrentApp('home')}
+              >
+                Back
+              </button>
+            </div>
+          )}
+          {currentApp === 'snapchat' && (
+            <div className="flex flex-col items-center justify-center flex-grow p-4">
+              <h2 className="text-xl font-bold mb-4">Snapchat</h2>
+              <ul className="space-y-4 w-full">
+                {snapchats.map((snap) => (
+                  <li key={snap.id} className="border-b border-gray-700 pb-2">
+                    <p className="font-semibold">{snap.caption}</p>
+                    <p>{snap.description}</p>
+                    <p className="text-sm text-gray-400">Views: {snap.views} | Likes: {snap.likes}</p>
+                    {snap.comments.length > 0 && (
+                      <ul className="ml-4 mt-2">
+                        {snap.comments.map((comment, idx) => (
+                          <li key={idx} className="text-sm text-gray-400">• {comment}</li>
+                        ))}
+                      </ul>
+                    )}
+                  </li>
+                ))}
+              </ul>
+              <button
+                className="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded w-full mt-4"
+                onClick={() => setCurrentApp('home')}
+              >
+                Back
+              </button>
+            </div>
+          )}
+          {currentApp === 'slutfans' && (
+            <div className="flex flex-col items-center justify-center p-4">
+              <h2 className="text-xl font-bold mb-4">Slutfans</h2>
+              <ul className="space-y-4 w-full">
+                {slutfans.map((slot) => (
+                  <li key={slot.id} className="border-b border-gray-700 pb-2">
+                    <p>{slot.content}</p>
+                    <ul className="ml-4 mt-2">
+                      {slot.comments.map((comment, idx) => (
+                        <li key={idx} className="text-sm text-gray-400">• {comment}</li>
+                      ))}
+                    </ul>
+                  </li>
+                ))}
+              </ul>
+              <button
+                className="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded w-full mt-4"
+                onClick={() => setCurrentApp('home')}
+              >
+                Back
+              </button>
+            </div>
+          )}
+        </div>
+      );
+    };
+
+    ReactDOM.render(<App />, document.getElementById('root'));
+  </script>
+</body>
+</html>
